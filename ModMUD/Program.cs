@@ -13,12 +13,12 @@
                     // NYI: load mockup or expansions
                     Console.WriteLine("NYI: load mockup or expansions");
                 }
-                else if (command == "starta")
+                else if (command == "start")
                 {
                     // NYI: start the first room
                     Console.WriteLine("NYI: start the first room");
                 }
-                else if (command == "spara")
+                else if (command == "save")
                 {
                     // NYI: save a room
                     Console.WriteLine("NYI: save a room");
@@ -26,7 +26,7 @@
                 else if (command == "n")
                 {
                     // NYI: move north
-                    Console.WriteLine("NYI");
+                    Console.WriteLine("NYI: move north");
                 }
                 else if (command == "s")
                 {
@@ -43,7 +43,7 @@
                     // NYI: move west
                     Console.WriteLine("NYI: move west");
                 }
-            } while (true);
+            } while (command != "quit");
         }
     }
 }
