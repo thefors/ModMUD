@@ -1,1 +1,2 @@
 # ModMUD
+Educational purpose
