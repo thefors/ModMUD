@@ -1,4 +1,6 @@
-﻿namespace ModMUD
+﻿using System.Threading.Channels;
+
+namespace ModMUD
 {
     internal class Program
     {
@@ -28,18 +30,70 @@
                 South = south;
                 West = west;
             }
+
+     
+            public void fullPrint()
+            {
+                Console.WriteLine($"{Name}");
+                Console.WriteLine(Presentation);
+                Console.WriteLine("Alternativ");
+
+                if (North > -1)
+                    Console.WriteLine("n - norrut");
+
+                if (East > -1)
+                    Console.WriteLine("e - österut");
+
+                if (South > -1)
+                    Console.WriteLine("s - söderut");
+
+                if (West > -1)
+                    Console.WriteLine("w - västerut");
+
+            }
         }
+
+        static List<Room> roomsOfMud = new List<Room>();
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to Rooms of MUD.");
             string command;
             do
             {
+                Console.Write("> ");
                 command = Console.ReadLine();
-                if (command == "load")
+                if (command.Contains("load"))
                 {
-                    // NYI: load mockup or expansions
-                    Console.WriteLine("NYI: load mockup or expansions");
+                    string[] cmdWithArgs = command.Split(' ');
+                    string fileRoot = @"C:\Users\Ägare\";
+                    string fullFilePath = fileRoot + cmdWithArgs[1];
+
+                    using (StreamReader sr = new StreamReader(fullFilePath))
+                    {
+                        while (sr.Peek() > -1)
+                        {
+                            string line;
+                            line = sr.ReadLine();
+
+                            if (line.Contains("//")){ // skip first line if commented with //
+                                continue;
+                            }
+
+                            string[] mudData = line.Split('|');
+                            Room r = new Room(Int32.Parse(mudData[0]), 
+                                mudData[1], 
+                                mudData[2],
+                                Int32.Parse(mudData[3]),
+                                Int32.Parse(mudData[4]),
+                                Int32.Parse(mudData[5]),
+                                Int32.Parse(mudData[6])
+                                );
+                            roomsOfMud.Add(r);
+                        }
+                    }
+                    Console.WriteLine($"{roomsOfMud.Count} rooms have been loaded.");
+
                 }
                 else if (command == "start")
                 {
