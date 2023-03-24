@@ -9,7 +9,7 @@ namespace ModMUD
             int Number { get; set; }
             string Name { get; set; }
             string Presentation { get; set; }
-            int North { get; set; }
+            public int North { get; set; }
             int East { get; set; }
             int South { get; set; }
             int West { get; set; }
@@ -32,32 +32,35 @@ namespace ModMUD
             }
 
      
-            public void fullPrint()
+            public void Print()
             {
-                Console.WriteLine($"{Name}");
+                Console.WriteLine($"{Name}\n");
                 Console.WriteLine(Presentation);
-                Console.WriteLine("Alternativ");
+                Console.WriteLine("\nAlternativ");
 
                 if (North > -1)
-                    Console.WriteLine("n - norrut");
+                    Console.WriteLine("\tn - norrut");
 
                 if (East > -1)
-                    Console.WriteLine("e - österut");
+                    Console.WriteLine("\te - österut");
 
                 if (South > -1)
-                    Console.WriteLine("s - söderut");
+                    Console.WriteLine("\ts - söderut");
 
                 if (West > -1)
-                    Console.WriteLine("w - västerut");
+                    Console.WriteLine("\tw - västerut");
 
             }
         }
 
-        static List<Room> roomsOfMud = new List<Room>();
+        
 
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Rooms of MUD.");
+
+            List<Room> roomsOfMud = new List<Room>();
+            int currentRoom = 0;
             string command;
             do
             {
@@ -76,13 +79,14 @@ namespace ModMUD
                             string line;
                             line = sr.ReadLine();
 
-                            if (line.Contains("//")){ // skip first line if commented with //
+                            if (line.Contains("//"))
+                            { // skip first line if commented with //
                                 continue;
                             }
 
                             string[] mudData = line.Split('|');
-                            Room r = new Room(Int32.Parse(mudData[0]), 
-                                mudData[1], 
+                            Room r = new Room(Int32.Parse(mudData[0]),
+                                mudData[1],
                                 mudData[2],
                                 Int32.Parse(mudData[3]),
                                 Int32.Parse(mudData[4]),
@@ -99,6 +103,7 @@ namespace ModMUD
                 {
                     // NYI: start the first room
                     Console.WriteLine("NYI: start the first room");
+                    roomsOfMud[currentRoom].Print();
                 }
                 else if (command == "save")
                 {
@@ -109,7 +114,12 @@ namespace ModMUD
                 {
                     // NYI: move north
                     Console.WriteLine("NYI: move north");
+                    if (roomsOfMud[currentRoom].North > -1)
+                    {
+
+                    }
                 }
+
                 else if (command == "s")
                 {
                     // NYI: move south
